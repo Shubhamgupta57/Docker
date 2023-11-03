@@ -1,18 +1,18 @@
 #!/bin/bash
 
-sudo apt-get update
+apt-get update
 
-sudo apt-get install snap -y
-sudo snap install --channel=1.20 go --classic
+apt-get install snap -y
+snap install --channel=1.20 go --classic
 
 echo 'SERVICENAME="stagetest"'>> /etc/environment
 
-sudo apt-get install nginx -y
-sudo ufw allow 'Nginx Full'
-sudo ufw allow 'OpenSSH'
-yes | sudo ufw enable
+apt-get install nginx -y
+ufw allow 'Nginx Full'
+ufw allow 'OpenSSH'
+yes |  ufw enable
 
-sudo rm /etc/nginx/sites-available/default
+ rm /etc/nginx/sites-available/default
 
 echo 'server {
   # listen on port 80 (http)
@@ -30,10 +30,8 @@ echo 'server {
 }' >> /etc/nginx/sites-available/default
 
 
-sudo systemctl reload nginx.service
-sudo systemctl restart nginx.service
-
-sudo apt-get install python3-certbot-nginx -y
+ systemctl reload nginx.service
+ systemctl restart nginx.service
 
 
 echo '[Unit]
@@ -53,7 +51,8 @@ StandardError=syslog
 [Install]
 WantedBy=multi-user.target' >> /lib/systemd/system/stagetest.service
 
-sudo chmod 755 /lib/systemd/system/stagetest.service
+ chmod 755 /lib/systemd/system/stagetest.service
+
 
 
 
